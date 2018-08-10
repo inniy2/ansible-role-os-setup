@@ -7,7 +7,7 @@
 - name: Create MySQL user
   user:
     name: mysql
-    comment: mysql-user
+    comment: mysql user
     uid: 55000
     group: mysql
     shell: /bin/bash
@@ -22,10 +22,28 @@
 - name: Create MHA user
   user:
     name: dbamha
-    comment: mha-user
+    comment: mha user
     uid: 56000
-    group: mysql
+    group: dbamha
+    groups: mysql
     shell: /bin/bash
     create_home: True
     home: "{{ mha_home_dir }}"
+
+
+- name: Create td-agent group
+  group:
+    name: td-agent
+    gid: 20118
+
+- name: Create td-agent user
+  user:
+    name: td-agent
+    comment: td-agent user
+    uid: 20440
+    group: td-agent
+    groups: mysql
+    shell: /bin/false
+    create_home: True
+    home: "{{ td_agent_home_dir }}"
 
